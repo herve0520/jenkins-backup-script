@@ -20,7 +20,7 @@ if [ -z "$JENKINS_HOME" -o -z "$DEST_FILE" ] ; then
 fi
 
 rm -rf "$ARC_DIR" "$TMP_TAR_NAME"
-mkdir -p "$ARC_DIR/"{plugins,jobs,users,secrets,nodes}
+mkdir -p "$ARC_DIR/"{plugins,jobs,users,secrets,nodes,ssh}
 
 cp "$JENKINS_HOME/"*.xml "$ARC_DIR"
 
@@ -41,6 +41,10 @@ fi
 
 if [ "$(ls -A $JENKINS_HOME/nodes/)" ] ; then
   cp -R "$JENKINS_HOME/nodes/"* "$ARC_DIR/nodes"
+fi
+
+if [ "$(ls -A $JENKINS_HOME/.ssh/)" ] ; then
+  cp -R "$JENKINS_HOME/.ssh/"* "$ARC_DIR/.ssh"
 fi
 
 function backup_jobs {
@@ -69,7 +73,7 @@ if [ "$(ls -A $JENKINS_HOME/jobs/)" ] ; then
 fi
 
 cd "$TMP_DIR"
-tar -czvf "$TMP_TAR_NAME" "$ARC_NAME/"*
+tar -czvf "$TMP_TAR_NAME" "$ARC_NAME/"
 cd -
 mv -f "$TMP_TAR_NAME" "$DEST_FILE"
 rm -rf "$ARC_DIR"
