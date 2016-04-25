@@ -73,7 +73,7 @@ if [ "$(ls -A $JENKINS_HOME/jobs/)" ] ; then
 fi
 
 cd "$TMP_DIR"
-tar -czvf "$TMP_TAR_NAME" "$ARC_NAME/"
+tar -czvf "$TMP_TAR_NAME" "$ARC_NAME/" -C "$ARC_NAME"
 cd -
 mv -f "$TMP_TAR_NAME" "$DEST_FILE"
 rm -rf "$ARC_DIR"
